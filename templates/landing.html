@@ -20,7 +20,7 @@
         </p>
         <div class="hero-actions">
             <a href="{{ url_for('register') }}" class="hero-btn">Create free account</a>
-            <a href="{{ url_for('login') }}" class="hero-btn">See how it works</a>
+            <button type="button" class="hero-btn" id="videoModalOpen">See how it works</button>
         </div>
     </div>
 
@@ -102,4 +102,73 @@
     </div>
 </section>
 
+<!-- How-it-works video modal -->
+<div class="video-modal" id="videoModal" role="dialog" aria-modal="true"
+     aria-labelledby="videoModalTitle" hidden>
+    <div class="video-modal-dialog" id="videoModalDialog">
+        <div class="video-modal-header">
+            <h2 class="video-modal-title" id="videoModalTitle">See how Spendly works</h2>
+            <button type="button" class="video-modal-close" id="videoModalClose"
+                    aria-label="Close video">&times;</button>
+        </div>
+        <div class="video-modal-frame">
+            <!-- Placeholder video — swap the ID in data-video-id below -->
+            <iframe id="videoModalIframe"
+                    data-video-id="aqz-KE-bpKQ"
+                    src=""
+                    title="How Spendly works"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+    var modal  = document.getElementById('videoModal');
+    var dialog = document.getElementById('videoModalDialog');
+    var iframe = document.getElementById('videoModalIframe');
+    var openBtn  = document.getElementById('videoModalOpen');
+    var closeBtn = document.getElementById('videoModalClose');
+
+    if (!modal || !iframe || !openBtn) return;
+
+    var videoId = iframe.getAttribute('data-video-id');
+
+    function openModal() {
+        // Setting src here rather than in the markup means the video is only
+        // requested when the user actually asks for it.
+        iframe.src = 'https://www.youtube.com/embed/' + videoId +
+                     '?autoplay=1&rel=0';
+        modal.hidden = false;
+        document.body.classList.add('modal-open');
+        closeBtn.focus();
+    }
+
+    function closeModal() {
+        modal.hidden = true;
+        document.body.classList.remove('modal-open');
+        // Clearing src tears down the player, which is what actually stops
+        // playback — hiding the modal alone leaves the audio running.
+        iframe.src = '';
+        openBtn.focus();
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+
+    // A click on the overlay closes; a click inside the dialog does not.
+    modal.addEventListener('click', function (event) {
+        if (!dialog.contains(event.target)) closeModal();
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && !modal.hidden) closeModal();
+    });
+})();
+</script>
 {% endblock %}
