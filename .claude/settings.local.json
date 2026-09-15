@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "PowerShell(& \"D:\\\\Sachin Projects\\\\expense-tracker\\\\venv\\\\Scripts\\\\pip.exe\" install -r \"D:\\\\Sachin Projects\\\\expense-tracker\\\\requirements.txt\")",
-      "PowerShell(& \"D:\\\\Sachin Projects\\\\expense-tracker\\\\venv\\\\Scripts\\\\python.exe\" \"D:\\\\Sachin Projects\\\\expense-tracker\\\\app.py\")"
+      "PowerShell(& \"D:\\\\Sachin Projects\\\\expense-tracker\\\\venv\\\\Scripts\\\\python.exe\" \"D:\\\\Sachin Projects\\\\expense-tracker\\\\app.py\")",
+      "PowerShell(git *)"
     ]
   }
 }
